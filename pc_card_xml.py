@@ -11,24 +11,27 @@ try:
 except ImportError:
 	import xml.etree.ElementTree as ET
 
-input_file = "base_xml"
-with_reason = "query_with_reason"
-without_reason = "query_without_reason"
+sid='20991'
+input_file = sid+"_all_xml"
+with_reason = sid+"query_with_reason"
+without_reason = sid+"query_without_reason"
 query_list = []
 noquery_list = []
-with open("./data/diff.xml", 'r') as xf:
-	try:
-		for line in xf.readlines():
+with open(input_file, 'r') as xf:
+	for line in xf.readlines():
+		try:
+
 			line = line.decode("gb18030").encode("utf-8")
 
 			node = ET.fromstring(line)
 			key = node.find('key').text
-			e = node.find("./display/Right_Resources/card/list[0]/attridk")
+			e = node.find("./display/Right_Resources/card/list[0]/attrid")
 			if e == None:
 				noquery_list.append(key)
-			query_list.append(key)
-	except:
-		print >> sys.stderr, line
+			else:
+				query_list.append(key)
+		except:
+			print >> sys.stderr, line
 
 
 
