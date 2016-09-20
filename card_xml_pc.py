@@ -17,17 +17,18 @@ without_reason = "query_without_reason"
 query_list = []
 noquery_list = []
 with open("./data/diff.xml", 'r') as xf:
-	for line in xf.readlines():
-		line = line.decode("gb18030").encode("utf-8")
+	try:
+		for line in xf.readlines():
+			line = line.decode("gb18030").encode("utf-8")
 
-		node = ET.fromstring(line)
-		key = node.find('key').text
-		e = node.find("./display/Right_Resources/card/list[0]/attridk")
-		if e == None:
-			noquery_list.append(key)
-		query_list.append(key)
-
-			#print >> sys.stderr,line
+			node = ET.fromstring(line)
+			key = node.find('key').text
+			e = node.find("./display/Right_Resources/card/list[0]/attridk")
+			if e == None:
+				noquery_list.append(key)
+			query_list.append(key)
+	except:
+		print >> sys.stderr, line
 
 
 
