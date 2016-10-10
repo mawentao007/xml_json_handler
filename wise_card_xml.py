@@ -11,21 +11,19 @@ try:
 except ImportError:
 	import xml.etree.ElementTree as ET
 
-#base_xml_file = "12793_xml_card2"
-#expr_xml_file = "19190_xml_card2"
-base_xml_file = "30355_xml_base"
-expr_xml_file = "30356_xml_expr"
+base_xml_file = sys.argv[1]
+expr_xml_file = sys.argv[2]
 
-#base_xml_file = "12793"
-#expr_xml_file = "19190"
 base_dic = {}
 expr_dic = {}
 query_only_expr = []
 diff_query = []
-#diff_query_file= "diff_query_card2"
-#only_expr_file= "only_expr_card2"
-diff_query_file= "diff_query_card1"
-only_expr_file= "only_expr_card1"
+nodiff_query = []
+
+diff_query_file= "diff_query"
+only_expr_file= "only_expr"
+nodiff_file = "nodiff_query"
+
 with open(base_xml_file, 'r') as xf:
 	for line in xf.readlines():
 		line = line.decode("gb18030").encode("utf-8")
@@ -60,6 +58,8 @@ for (k,v) in expr_dic.iteritems():
 		query_only_expr.append(k)
 	elif v != base_dic[k]:
 		diff_query.append(k)
+	else:
+		nodiff_query.append(k)
 
 print len(query_only_expr)
 print len(diff_query)
@@ -72,3 +72,7 @@ with open(diff_query_file, 'w') as dq:
 with open(only_expr_file, 'w') as dq:
 	for x in query_only_expr:
 		dq.write(x.encode("gb18030")+'\n')
+
+with open(nodiff_file, 'w') as nf:
+	for x in nodiff_query:
+		nf.write(x.encode("gb18030")+'\n')
