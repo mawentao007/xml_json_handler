@@ -40,8 +40,12 @@ with open(base_xml_file, 'r') as xf:
 			entities = []
 			node = ET.fromstring(line)
 			key = node.find('key').text
+			num = 0
 			for e in node.findall(".//name"):          
+				if num > 4:
+					break
 				entities.append(e.text)
+				num += 1
 			base_dic[key] = entities
 		except:
 			pass
@@ -55,8 +59,12 @@ with open(expr_xml_file, 'r') as xf:
 		try:
 			node = ET.fromstring(line)
 			key = node.find('key').text
+			num = 0
 			for e in node.findall('.//name'):
+				if num > 4:
+					break
 				entities.append(e.text)
+				num += 1
 			expr_dic[key] = entities
 		except:
 			pass
